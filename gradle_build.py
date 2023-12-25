@@ -1,31 +1,68 @@
-import subprocess
 import os
 import json
+import subprocess
+import shutil
 
 
-def load_directories(file_path="config.json"):
-    with open(file_path, "r") as json_file:
-        data = json.load(json_file)
-    return data.get("file_path_gradlebuild_directories", [])
+def load_config(file_path_config="config.json"):
+    script_directory = os.path.dirname(os.path.abspath(__file__))
+    config_file_path_special = os.path.join(script_directory, file_path_config)
+
+    with open(config_file_path_special, "r") as config_file:
+        config_stuff = json.load(config_file)
+
+    return config_stuff
 
 
-directories_data = load_directories()
+def rename_file(old_name, new_name):
+    try:
+        os.rename(old_name, new_name)
+        print(f"File '{old_name}' renamed to '{new_name}'.")
+    except Exception as e:
+        print(f"Error: {e}")
 
+
+# Load directories from the configuration
+directories_data = load_config().get("file_path_gradlebuild_directories")
+
+# Get the build input from the user
 build = input("To build: ")
 
-# List of directories to navigate
-directories = directories_data if directories_data else []
-
-
-# Change directory for each folder
-for directory in directories:
-    full_path = os.path.abspath(os.path.join(os.getcwd(), directory))
-    os.chdir(full_path)
-
+os.chdir(directories_data)
 os.chdir(build)
 
 # Run the 'gradle build' command
 subprocess.run(["gradle", "build"])
 
+# Change to the 'build/libs' directory
 os.chdir("build")
 os.chdir("libs")
+
+# Get the new file name input from the user
+file_name = input("Rename file to: ")
+
+# Specify old and new file names
+old_file_name = "modid-1.0.jar"
+new_file_name = file_name + ".jar"
+
+# Rename the file
+rename_file(old_file_name, new_file_name)
+
+source_file = os.getcwd() + "/" + new_file_name
+
+os.getcwd()
+
+# Load the configuration
+config_file_path = load_config().get("file_path_builds")
+directory_name = input("Put in file: ")
+
+new_folder_path = os.path.join(config_file_path, directory_name)
+if not os.path.exists(new_folder_path):
+    os.makedirs(new_folder_path)
+    print(f"Folder '{directory_name}' created inside '{new_folder_path}'.")
+else:
+    print(f"Folder '{directory_name}' inside '{new_folder_path}' already exists.")
+
+shutil.move(source_file, new_folder_path)
+# Move the file
+# move_file(new_file_name, destination_directory)
