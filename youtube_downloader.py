@@ -1,11 +1,24 @@
 from pytube import YouTube, Playlist
 from pytube.exceptions import VideoUnavailable
 import os
+import json
+
+
+def load_config(file_path_config="config.json"):
+    with open(file_path_config, "r") as config_file:
+        config_stuff = json.load(config_file)
+    return config_stuff
+
+
+# Load the configuration
+config = load_config()
+
+file_videos = config.get("file_path_videos")
 
 
 def create_video_folder(folder_name):
     # Define the path to the Videos folder in the user's home directory
-    video_path = os.path.expanduser('/home/shibeo/Videos/')
+    video_path = os.path.expanduser(file_videos)
 
     # Combine the Videos folder path with the new folder name
     new_folder_path = os.path.join(video_path, folder_name)
@@ -42,11 +55,11 @@ def download_single_video(video, video_format, folder_name):
     try:
         if video_format == "Video":
             stream = video.streams.get_highest_resolution()  # gets ready to download
-            stream.download(f'/home/shibeo/Videos/{folder_name}')
+            stream.download(os.path.join(file_videos, folder_name))
             print(f"Download Complete of video: {video.title}")
         elif video_format == "Audio":
             stream = video.streams.filter(only_audio=True).first()
-            stream.download(f'/home/shibeo/Videos/{folder_name}', filename=f"{video.title}.mp3")
+            stream.download(os.path.join(file_videos, folder_name), filename=f"{video.title}.mp3")
             print(f"Download Complete of audio: {video.title}")
         else:
             print("Not a valid format!")
