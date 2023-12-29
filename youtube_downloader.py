@@ -3,6 +3,8 @@ from pytube.exceptions import VideoUnavailable
 import os
 import json
 
+from helper_methods import create_folder_possibly
+
 
 def load_config(file_path_config="config.json"):
     with open(file_path_config, "r") as config_file:
@@ -16,25 +18,8 @@ config = load_config()
 file_videos = config.get("file_path_videos")
 
 
-def create_video_folder(folder_name):
-    # Define the path to the Videos folder in the user's home directory
-    video_path = os.path.expanduser(file_videos)
-
-    # Combine the Videos folder path with the new folder name
-    new_folder_path = os.path.join(video_path, folder_name)
-
-    # Check if the folder exists
-    if not os.path.exists(new_folder_path):
-        # If it doesn't exist, create the folder
-        os.makedirs(new_folder_path)
-        print(f"Folder '{folder_name}' created inside '{video_path}'.")
-    else:
-        # If it already exists, do nothing
-        print(f"Folder '{folder_name}' inside '{video_path}' already exists.")
-
-
 def download_video(video_link, video_format, folder_name):
-    create_video_folder(folder_name)
+    create_folder_possibly(folder_name, file_videos)
     try:
         if "playlist" in video_link.lower():
             playlist = Playlist(video_link)
