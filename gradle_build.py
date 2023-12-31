@@ -38,11 +38,30 @@ subprocess.run(["gradle", "build"])
 os.chdir("build")
 os.chdir("libs")
 
+# Get the list of files in the 'libs' directory
+files_in_libs = os.listdir()
+
+# Check the number of files in the 'libs' directory
+if len(files_in_libs) == 1:
+    # If there is only one file, use it
+    old_file_name = files_in_libs[0]
+else:
+    # If there are multiple files, prompt the user to choose
+    print("Multiple files found in 'libs' directory. Choose a file to rename:")
+    for i, file in enumerate(files_in_libs, start=1):
+        print(f"{i}. {file}")
+
+    choice = int(input("Enter the number corresponding to the file: "))
+
+    # Validate the user's choice
+    if 1 <= choice <= len(files_in_libs):
+        old_file_name = files_in_libs[choice - 1]
+    else:
+        print("Invalid choice. Exiting.")
+        exit()
+
 # Get the new file name input from the user
 file_name = input("Rename file to: ")
-
-# Specify old and new file names
-old_file_name = "modid-1.0.jar"
 new_file_name = file_name + ".jar"
 
 # Rename the file
