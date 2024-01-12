@@ -3,23 +3,17 @@ from pytube.exceptions import VideoUnavailable
 import os
 import json
 
+import helper_methods
 from helper_methods import create_folder_possibly
 
 test = input("test")
 
 
-def load_config(file_path_config="config.json"):
-    script_directory = os.path.dirname(os.path.abspath(__file__))
-    config_file_path_special = os.path.join(script_directory, file_path_config)
 
-    with open(config_file_path_special, "r") as config_file:
-        config_stuff = json.load(config_file)
-
-    return config_stuff
 
 
 # Load the configuration
-config = load_config()
+config = helper_methods.load_config()
 
 file_videos = config.get("file_path_videos")
 

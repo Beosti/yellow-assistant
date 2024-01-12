@@ -2,16 +2,11 @@ import json
 import os.path
 import subprocess
 
+import helper_methods
 from helper_methods import create_folder_possibly
 
+config = helper_methods.load_config()
 
-def load_config(file_path_config="config.json"):
-    with open(file_path_config, "r") as config_file:
-        config_stuff = json.load(config_file)
-    return config_stuff
-
-
-config = load_config()
 file_repositories = config.get("file_path_repositories")
 
 repository_copy = input("Repository to copy: ")

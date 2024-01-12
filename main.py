@@ -7,9 +7,10 @@ def main():
     print("2. Download Videos")
     print("3. Generate a random password")
     print("4. Copy a github repository")
-    print("5. Compile the rom")
+    print("5. Compile a rom file")
+    print("6. Convert a Video to a Gif file")
 
-    choice = input("Enter your choice (1, 2, 3, 4 or 5) or ask me a question: ")
+    choice = input("Enter your choice (1, 2, 3, 4, 5 or 6) or ask me a question: ")
 
     if choice == "1":
         build_script_path = "/home/shibeo/PycharmProjects/automation/gradle_build.py"
@@ -25,6 +26,9 @@ def main():
         subprocess.run(["/usr/bin/python3.10", download_script_path], check=True)
     elif choice == "5":
         download_script_path = "/home/shibeo/PycharmProjects/automation/compile_rom.py"
+        subprocess.run(["/usr/bin/python3.10", download_script_path], check=True)
+    elif choice == "6":
+        download_script_path = "/home/shibeo/PycharmProjects/automation/mp4_to_gif.py"
         subprocess.run(["/usr/bin/python3.10", download_script_path], check=True)
     elif choice == "Do you have sentience?":
         print("No.")
