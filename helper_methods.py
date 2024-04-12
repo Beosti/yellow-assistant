@@ -2,14 +2,28 @@ import os
 import json
 
 
-def load_config(file_path_config="config.json"):
+def load_config(config_option):
     script_directory = os.path.dirname(os.path.abspath(__file__))
-    config_file_path_special = os.path.join(script_directory, file_path_config)
+    config_file_path = os.path.join(script_directory, "config.json")
 
-    with open(config_file_path_special, "r") as config_file:
-        config_stuff = json.load(config_file)
+    # Check if the config file exists
+    if os.path.exists(config_file_path):
+        with open(config_file_path, "r") as config_file:
+            config_stuff = json.load(config_file)
+    else:
+        print("Config file not found. Creating a new one.")
+        config_stuff = {}
 
-    return config_stuff
+    # Prompt the user to input value for the specified configuration option
+    if config_option not in config_stuff:
+        value = input(f"Enter the value for {config_option}: ")
+        config_stuff[config_option] = value
+
+        # Update the config file with the user-provided value
+        with open(config_file_path, "w") as config_file:
+            json.dump(config_stuff, config_file, indent=4)
+
+    return config_stuff.get(config_option)
 
 
 def create_folder_possibly(folder_name, base_folder):

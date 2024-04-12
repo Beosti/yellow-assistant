@@ -1,17 +1,12 @@
 from pytube import YouTube, Playlist
 from pytube.exceptions import VideoUnavailable
 import os
-import json
 
 import helper_methods
 from helper_methods import create_folder_possibly
 
-test = input("test")
-
 # Load the configuration
-config = helper_methods.load_config()
-
-file_videos = config.get("file_path_videos")
+file_videos = helper_methods.load_config("file_path_videos")
 
 
 def download_video(video_link, video_format, folder_name):
