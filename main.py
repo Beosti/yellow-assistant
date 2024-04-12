@@ -1,4 +1,7 @@
 import subprocess
+import os
+
+current_directory = os.path.dirname(os.path.abspath(__file__))
 
 
 def main():
@@ -13,28 +16,24 @@ def main():
     choice = input("Enter your choice (1, 2, 3, 4, 5 or 6) or ask me a question: ")
 
     if choice == "1":
-        build_script_path = "/home/shibeo/PycharmProjects/automation/gradle_build.py"
-        subprocess.run(["/usr/bin/python3.10", build_script_path], check=True)
+        script_path = os.path.join(current_directory, "gradle_build.py")
     elif choice == "2":
-        download_script_path = "/home/shibeo/PycharmProjects/automation/youtube_downloader.py"
-        subprocess.run(["/usr/bin/python3.10", download_script_path], check=True)
+        script_path = os.path.join(current_directory, "youtube_downloader.py")
     elif choice == "3":
-        download_script_path = "/home/shibeo/PycharmProjects/automation/generate_passwords.py"
-        subprocess.run(["/usr/bin/python3.10", download_script_path], check=True)
+        script_path = os.path.join(current_directory, "generate_passwords.py")
     elif choice == "4":
-        download_script_path = "/home/shibeo/PycharmProjects/automation/copy_repository.py"
-        subprocess.run(["/usr/bin/python3.10", download_script_path], check=True)
+        script_path = os.path.join(current_directory, "copy_repository.py")
     elif choice == "5":
-        download_script_path = "/home/shibeo/PycharmProjects/automation/compile_rom.py"
-        subprocess.run(["/usr/bin/python3.10", download_script_path], check=True)
+        script_path = os.path.join(current_directory, "compile_rom.py")
     elif choice == "6":
-        download_script_path = "/home/shibeo/PycharmProjects/automation/mp4_to_gif.py"
-        subprocess.run(["/usr/bin/python3.10", download_script_path], check=True)
+        script_path = os.path.join(current_directory, "mp4_to_gif.py")
     elif choice == "Do you have sentience?":
         print("No.")
         input("")
     else:
         print("Invalid choice. Please enter 1, 2, 3 or 4.")
+    # Run the selected script
+    subprocess.run(["python3", script_path], check=True)
 
 
 if __name__ == "__main__":

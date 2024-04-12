@@ -8,10 +8,6 @@ from helper_methods import create_folder_possibly
 
 test = input("test")
 
-
-
-
-
 # Load the configuration
 config = helper_methods.load_config()
 
