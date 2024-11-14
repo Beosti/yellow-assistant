@@ -1,7 +1,7 @@
 import os
 import json
 
-
+# this should automatically make a file if not put in config.json/ask where to put it
 def load_config(config_option):
     script_directory = os.path.dirname(os.path.abspath(__file__))
     config_file_path = os.path.join(script_directory, "config.json")

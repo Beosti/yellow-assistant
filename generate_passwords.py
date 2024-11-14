@@ -28,9 +28,9 @@ passwordGenerated = generate_password(passswordLength)
 
 
 # Function to load configuration from the JSON file
-config = helper_methods.load_config()
+config = helper_methods.load_config("file_path_passwords")
 
-file_path = config.get("file_path_passwords")
+file_path = helper_methods.load_config("file_path_passwords")
 
 with open(file_path, "a") as file:
     file.write(f"Site:  {site}\n")
