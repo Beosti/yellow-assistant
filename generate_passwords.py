@@ -1,7 +1,7 @@
 import os
 import random
 import string
-import json
+import subprocess
 
 import helper_methods
 
@@ -26,6 +26,7 @@ while True:
 
 passwordGenerated = generate_password(passswordLength)
 
+current_directory = os.path.dirname(os.path.abspath(__file__))
 
 # Function to load configuration from the JSON file
 config = helper_methods.load_config("file_path_passwords")
@@ -40,3 +41,10 @@ with open(file_path, "a") as file:
     file.write("-" * 20 + "\n")
 
 print(f"Password has been saved to {file_path}")
+print("Done? Just enter to finish, if not put anything else.")
+choice = input("Choice: ")
+if choice == "":
+    exit;
+else:
+    script_path = os.path.join(current_directory, "main.py")
+    subprocess.run(["python3", script_path], check=True)
