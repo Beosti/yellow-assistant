@@ -1,5 +1,6 @@
 import subprocess
 import os
+import sys
 
 current_directory = os.path.dirname(os.path.abspath(__file__))
 
@@ -12,6 +13,7 @@ def main():
     print("4. Copy a github repository")
     print("5. Compile a rom file")
     print("6. Convert a Video to a Gif file")
+    print("7. Run the hotkeys in the background")
 
     choice = input("Enter your choice (1, 2, 3, 4, 5 or 6) or ask me a question: ")
 
@@ -27,12 +29,23 @@ def main():
         script_path = os.path.join(current_directory, "compile_rom.py")
     elif choice == "6":
         script_path = os.path.join(current_directory, "mp4_to_gif.py")
+    elif choice == "7":
+        python_executable = sys.executable
+        subprocess.Popen(
+            [python_executable, "hotkeys.py"],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            creationflags=subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0 # no terminal on windows
+        )
+        print("hotkey script running!")
+        return;
     elif choice == "Do you have sentience?":
         print("No.")
         input("")
     else:
         print("Invalid choice. Please enter 1, 2, 3 or 4.")
     # Run the selected script
+
     subprocess.run(["python3", script_path], check=True)
 
 
